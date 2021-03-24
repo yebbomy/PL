@@ -1,0 +1,322 @@
+Grammar
+
+    0 $accept: start $end
+
+    1 start: start '\n'
+    2      | nothing
+    3      | start expr '\n'
+
+    4 expr: expr '+' parts
+    5     | expr '-' parts
+    6     | parts
+
+    7 parts: parts '*' unit
+    8      | parts '/' unit
+    9      | unit
+
+   10 unit: primary
+   11     | '+' unit
+   12     | '-' unit
+
+   13 primary: '(' expr ')'
+   14        | INTEGER
+
+   15 nothing: %empty
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+'\n' (10) 1 3
+'(' (40) 13
+')' (41) 13
+'*' (42) 7
+'+' (43) 4 11
+'-' (45) 5 12
+'/' (47) 8
+error (256)
+INTEGER (258) 14
+
+
+Nonterminals, with rules where they appear
+
+$accept (11)
+    on left: 0
+start (12)
+    on left: 1 2 3, on right: 0 1 3
+expr (13)
+    on left: 4 5 6, on right: 3 4 5 13
+parts (14)
+    on left: 7 8 9, on right: 4 5 6 7 8
+unit (15)
+    on left: 10 11 12, on right: 7 8 9 11 12
+primary (16)
+    on left: 13 14, on right: 10
+nothing (17)
+    on left: 15, on right: 2
+
+
+State 0
+
+    0 $accept: . start $end
+
+    $default  reduce using rule 15 (nothing)
+
+    start    go to state 1
+    nothing  go to state 2
+
+
+State 1
+
+    0 $accept: start . $end
+    1 start: start . '\n'
+    3      | start . expr '\n'
+
+    $end     shift, and go to state 3
+    INTEGER  shift, and go to state 4
+    '\n'     shift, and go to state 5
+    '+'      shift, and go to state 6
+    '-'      shift, and go to state 7
+    '('      shift, and go to state 8
+
+    expr     go to state 9
+    parts    go to state 10
+    unit     go to state 11
+    primary  go to state 12
+
+
+State 2
+
+    2 start: nothing .
+
+    $default  reduce using rule 2 (start)
+
+
+State 3
+
+    0 $accept: start $end .
+
+    $default  accept
+
+
+State 4
+
+   14 primary: INTEGER .
+
+    $default  reduce using rule 14 (primary)
+
+
+State 5
+
+    1 start: start '\n' .
+
+    $default  reduce using rule 1 (start)
+
+
+State 6
+
+   11 unit: '+' . unit
+
+    INTEGER  shift, and go to state 4
+    '+'      shift, and go to state 6
+    '-'      shift, and go to state 7
+    '('      shift, and go to state 8
+
+    unit     go to state 13
+    primary  go to state 12
+
+
+State 7
+
+   12 unit: '-' . unit
+
+    INTEGER  shift, and go to state 4
+    '+'      shift, and go to state 6
+    '-'      shift, and go to state 7
+    '('      shift, and go to state 8
+
+    unit     go to state 14
+    primary  go to state 12
+
+
+State 8
+
+   13 primary: '(' . expr ')'
+
+    INTEGER  shift, and go to state 4
+    '+'      shift, and go to state 6
+    '-'      shift, and go to state 7
+    '('      shift, and go to state 8
+
+    expr     go to state 15
+    parts    go to state 10
+    unit     go to state 11
+    primary  go to state 12
+
+
+State 9
+
+    3 start: start expr . '\n'
+    4 expr: expr . '+' parts
+    5     | expr . '-' parts
+
+    '\n'  shift, and go to state 16
+    '+'   shift, and go to state 17
+    '-'   shift, and go to state 18
+
+
+State 10
+
+    6 expr: parts .
+    7 parts: parts . '*' unit
+    8      | parts . '/' unit
+
+    '*'  shift, and go to state 19
+    '/'  shift, and go to state 20
+
+    $default  reduce using rule 6 (expr)
+
+
+State 11
+
+    9 parts: unit .
+
+    $default  reduce using rule 9 (parts)
+
+
+State 12
+
+   10 unit: primary .
+
+    $default  reduce using rule 10 (unit)
+
+
+State 13
+
+   11 unit: '+' unit .
+
+    $default  reduce using rule 11 (unit)
+
+
+State 14
+
+   12 unit: '-' unit .
+
+    $default  reduce using rule 12 (unit)
+
+
+State 15
+
+    4 expr: expr . '+' parts
+    5     | expr . '-' parts
+   13 primary: '(' expr . ')'
+
+    '+'  shift, and go to state 17
+    '-'  shift, and go to state 18
+    ')'  shift, and go to state 21
+
+
+State 16
+
+    3 start: start expr '\n' .
+
+    $default  reduce using rule 3 (start)
+
+
+State 17
+
+    4 expr: expr '+' . parts
+
+    INTEGER  shift, and go to state 4
+    '+'      shift, and go to state 6
+    '-'      shift, and go to state 7
+    '('      shift, and go to state 8
+
+    parts    go to state 22
+    unit     go to state 11
+    primary  go to state 12
+
+
+State 18
+
+    5 expr: expr '-' . parts
+
+    INTEGER  shift, and go to state 4
+    '+'      shift, and go to state 6
+    '-'      shift, and go to state 7
+    '('      shift, and go to state 8
+
+    parts    go to state 23
+    unit     go to state 11
+    primary  go to state 12
+
+
+State 19
+
+    7 parts: parts '*' . unit
+
+    INTEGER  shift, and go to state 4
+    '+'      shift, and go to state 6
+    '-'      shift, and go to state 7
+    '('      shift, and go to state 8
+
+    unit     go to state 24
+    primary  go to state 12
+
+
+State 20
+
+    8 parts: parts '/' . unit
+
+    INTEGER  shift, and go to state 4
+    '+'      shift, and go to state 6
+    '-'      shift, and go to state 7
+    '('      shift, and go to state 8
+
+    unit     go to state 25
+    primary  go to state 12
+
+
+State 21
+
+   13 primary: '(' expr ')' .
+
+    $default  reduce using rule 13 (primary)
+
+
+State 22
+
+    4 expr: expr '+' parts .
+    7 parts: parts . '*' unit
+    8      | parts . '/' unit
+
+    '*'  shift, and go to state 19
+    '/'  shift, and go to state 20
+
+    $default  reduce using rule 4 (expr)
+
+
+State 23
+
+    5 expr: expr '-' parts .
+    7 parts: parts . '*' unit
+    8      | parts . '/' unit
+
+    '*'  shift, and go to state 19
+    '/'  shift, and go to state 20
+
+    $default  reduce using rule 5 (expr)
+
+
+State 24
+
+    7 parts: parts '*' unit .
+
+    $default  reduce using rule 7 (parts)
+
+
+State 25
+
+    8 parts: parts '/' unit .
+
+    $default  reduce using rule 8 (parts)
