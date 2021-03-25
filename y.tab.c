@@ -65,7 +65,6 @@
 #line 1 "calc_B735137.y" /* yacc.c:339  */
 
 #include <stdio.h>
-#include <math.h>
 #include <stdlib.h>
 float * stack = NULL;
 int stackSize = 0;
@@ -74,7 +73,7 @@ void push(float num);
 float pop();
 void yyerror(char * s);
 
-#line 78 "y.tab.c" /* yacc.c:339  */
+#line 77 "y.tab.c" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -131,7 +130,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 135 "y.tab.c" /* yacc.c:358  */
+#line 134 "y.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -428,7 +427,7 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    17,    17,    18,    19,    23,    24,    25,    27,    28,
+       0,    16,    16,    17,    18,    22,    23,    24,    26,    27,
       29,    31,    32,    33,    35,    35,    36
 };
 #endif
@@ -1209,32 +1208,33 @@ yyreduce:
   switch (yyn)
     {
         case 4:
-#line 19 "calc_B735137.y" /* yacc.c:1646  */
+#line 18 "calc_B735137.y" /* yacc.c:1646  */
     {printf("\n==========\n%g\n==========\n",pop());}
-#line 1215 "y.tab.c" /* yacc.c:1646  */
+#line 1214 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 5:
-#line 23 "calc_B735137.y" /* yacc.c:1646  */
+#line 22 "calc_B735137.y" /* yacc.c:1646  */
     {float s2 = pop(); float s1 = pop(); printf("%g + %g = %g\n",s1,s2,s1+s2); push(s1+s2);}
-#line 1221 "y.tab.c" /* yacc.c:1646  */
+#line 1220 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 6:
-#line 24 "calc_B735137.y" /* yacc.c:1646  */
+#line 23 "calc_B735137.y" /* yacc.c:1646  */
     {float s2= pop(); float s1 = pop(); printf("%g - %g = %g\n",s1,s2,s1-s2); push(s1-s2);}
-#line 1227 "y.tab.c" /* yacc.c:1646  */
+#line 1226 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 27 "calc_B735137.y" /* yacc.c:1646  */
+#line 26 "calc_B735137.y" /* yacc.c:1646  */
     {float s2 = pop(); float s1 = pop(); printf("%g * %g = %g\n",s1,s2,s1*s2); push(s1*s2);}
-#line 1233 "y.tab.c" /* yacc.c:1646  */
+#line 1232 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 28 "calc_B735137.y" /* yacc.c:1646  */
-    {float s2 = pop(); float s1 = pop(); printf("%g / %g = %g\n",s1,s2,s1/s2); push(s1/s2);}
+#line 27 "calc_B735137.y" /* yacc.c:1646  */
+    {float s2 = pop(); float s1 = pop(); if(s2 == 0){yyerror("Cannot Dividing by 0!!\n");exit(1);}
+printf("%g / %g = %g\n",s1,s2,s1/s2); push(s1/s2);}
 #line 1239 "y.tab.c" /* yacc.c:1646  */
     break;
 

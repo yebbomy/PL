@@ -1,6 +1,5 @@
 %{
 #include <stdio.h>
-#include <math.h>
 #include <stdlib.h>
 float * stack = NULL;
 int stackSize = 0;
@@ -25,7 +24,8 @@ expr:
 	| parts
 parts:
 	parts'*'unit {float s2 = pop(); float s1 = pop(); printf("%g * %g = %g\n",s1,s2,s1*s2); push(s1*s2);}
-	| parts'/'unit {float s2 = pop(); float s1 = pop(); printf("%g / %g = %g\n",s1,s2,s1/s2); push(s1/s2);}
+	| parts'/'unit {float s2 = pop(); float s1 = pop(); if(s2 == 0){yyerror("Cannot Dividing by 0!!\n");exit(1);}
+printf("%g / %g = %g\n",s1,s2,s1/s2); push(s1/s2);}
 	| unit
 unit:
 	primary
