@@ -1215,43 +1215,49 @@ yyreduce:
 
   case 5:
 #line 22 "calc_B735137.y" /* yacc.c:1646  */
-    {float s2 = pop(); float s1 = pop(); printf("%g + %g = %g\n",s1,s2,s1+s2); push(s1+s2);}
+    {float s2 = pop(); float s1 = pop(); printf("+\n"); push(s1+s2);}
 #line 1220 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 6:
 #line 23 "calc_B735137.y" /* yacc.c:1646  */
-    {float s2= pop(); float s1 = pop(); printf("%g - %g = %g\n",s1,s2,s1-s2); push(s1-s2);}
+    {float s2= pop(); float s1 = pop(); printf("-\n"); push(s1-s2);}
 #line 1226 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 8:
 #line 26 "calc_B735137.y" /* yacc.c:1646  */
-    {float s2 = pop(); float s1 = pop(); printf("%g * %g = %g\n",s1,s2,s1*s2); push(s1*s2);}
+    {float s2 = pop(); float s1 = pop(); printf("*\n"); push(s1*s2);}
 #line 1232 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 9:
 #line 27 "calc_B735137.y" /* yacc.c:1646  */
     {float s2 = pop(); float s1 = pop(); if(s2 == 0){yyerror("Cannot Dividing by 0!!\n");exit(1);}
-printf("%g / %g = %g\n",s1,s2,s1/s2); push(s1/s2);}
+printf("/\n"); push(s1/s2);}
 #line 1239 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 13:
 #line 33 "calc_B735137.y" /* yacc.c:1646  */
-    {float s1 = pop(); s1 *= -1; push(s1);}
+    {float s1 = pop(); s1 *= -1; printf("-\n"); push(s1);}
 #line 1245 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 14:
+#line 35 "calc_B735137.y" /* yacc.c:1646  */
+    {printf("()\n");}
+#line 1251 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 15:
 #line 35 "calc_B735137.y" /* yacc.c:1646  */
-    {push((yyvsp[0]));}
-#line 1251 "y.tab.c" /* yacc.c:1646  */
+    {float val = (yyvsp[0]); push(val); printf("%g\n",val);}
+#line 1257 "y.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1255 "y.tab.c" /* yacc.c:1646  */
+#line 1261 "y.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
